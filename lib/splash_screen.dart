@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo/home_page.dart';
+import 'package:todo/login_page.dart';
 import 'package:todo/onboarding_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,13 +19,30 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkquery() async {
-    await Future.delayed(Duration(seconds: 1), () async {
-      Navigator.pushAndRemoveUntil(
+    final prefs = await SharedPreferences.getInstance();
+    bool onboardComplete = prefs.getBool('onboardingComplete') ?? false;
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    // if (!mounted) return;
+
+    if (!onboardComplete) {
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => OnboardingPage()),
-        (route) => false,
+        MaterialPageRoute(builder: (context) => const OnboardingPage()),
       );
-    });
+    } else if (!isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    }
   }
 
   @override

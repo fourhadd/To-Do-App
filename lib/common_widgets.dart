@@ -20,7 +20,7 @@ class MainBtn extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 1,
       height: 62,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: isActive
               ? Color(0xff8875FF)
@@ -30,7 +30,7 @@ class MainBtn extends StatelessWidget {
           ),
         ),
         child: Text(
-          "Login",
+          title,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
@@ -48,14 +48,14 @@ class InputField extends StatefulWidget {
   final String titleText;
   final String hintText;
   final bool isPassword;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   const InputField({
     super.key,
     required this.titleText,
     required this.hintText,
     this.isPassword = false,
-    required this.controller,
+    this.controller,
   });
 
   @override
@@ -308,6 +308,48 @@ class Button extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class PriorityContainer extends StatelessWidget {
+  final int text;
+  final bool isSelected; // Əlavə olundu
+  final VoidCallback onTap;
+  const PriorityContainer({
+    super.key,
+    required this.text,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 64,
+        height: 64,
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0xff8687E7) : Color(0xff272727),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.flag_outlined, color: Colors.white),
+            SizedBox(height: 4),
+            Text(
+              text.toString(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/common_widgets.dart';
 import 'package:todo/login_page.dart';
 import 'package:todo/page_indicator.dart';
@@ -11,6 +12,11 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
+  Future<void> onboardComplete() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboardingComplete', true);
+  }
+
   int currentIndex = 0;
 
   final int pageCount = 3;
@@ -35,7 +41,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await onboardComplete();
+
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => LoginPage()),
@@ -89,8 +97,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         PageIndicator(isActive: currentIndex == 2),
                       ],
                     ),
-                    SizedBox(height: 50),
-
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.25,
                       child: PageView(
@@ -130,8 +136,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ? "Get Started"
                     : "Next",
                 textBtnTitle: "back",
-                nextPress: () {
+                nextPress: () async {
                   if (currentIndex == pageCount - 1) {
+                    await onboardComplete();
+
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => LoginPage()),
