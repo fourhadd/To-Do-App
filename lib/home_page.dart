@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_icon_class/font_awesome_icon_class.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo/add_task_sheet.dart';
 import 'package:todo/common_widgets.dart';
 import 'package:todo/model_todo.dart';
 
@@ -11,8 +15,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Todo> todos = Todo.tasks();
+  List<TodoItem> todos = TodoItem.tasks();
+  List<TodoItem> tasks = [];
+  bool isLoading = true;
+
   final TextEditingController _dateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    getTasks();
+  }
+
+  Future<void> getTasks() async {
+    setState(() {
+      isLoading = true;
+    });
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final rawData = prefs.getString("tasks");
+    final jsonDecodedData = rawData == null ? null : (json.decode(rawData) as List<dynamic>);
+    final List<TodoItem> tasks = jsonDecodedData == null
+        ? []
+        : jsonDecodedData.map((e) => TodoItem.fromJson(e)).toList();
+
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      this.tasks = tasks;
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,137 +71,14 @@ class _HomePageState extends State<HomePage> {
         width: 64,
         height: 64,
         child: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
+          onPressed: () async {
+            await showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Color(0xff363636),
-              builder: (BuildContext context) {
-                return Builder(
-                  builder: (context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                        left: 24,
-                        right: 24,
-                        top: 24,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Add Task",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          TextField(
-                            style: const TextStyle(color: Colors.white),
-                            // autofocus: true,
-                            decoration: InputDecoration(
-                              hintText: "Do math homework",
-                              hintStyle: const TextStyle(
-                                color: Colors.white54,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              enabledBorder: border,
-                              focusedBorder: border,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          TextField(
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              hintText: "Description",
-                              hintStyle: const TextStyle(
-                                color: Colors.white54,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: border,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.timer_outlined,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2100),
-                                    builder: (context, child) {
-                                      return Theme(
-                                        data: Theme.of(context).copyWith(
-                                          colorScheme: ColorScheme.dark(
-                                            primary: Color(0xFF8687E7),
-                                            onPrimary: Colors.white,
-                                            surface: Color(0xff363636),
-                                            onSurface: Colors.white,
-                                          ),
-                                        ),
-                                        child: child!,
-                                      );
-                                    },
-                                  );
-
-                                  if (pickedDate != null) {
-                                    setState(() {
-                                      _dateController.text =
-                                          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-                                    });
-                                  }
-                                },
-                              ),
-
-                              SizedBox(width: 20),
-                              IconButton(
-                                onPressed: () {
-                                  selectCategory(context, todos);
-                                },
-                                icon: Icon(
-                                  Icons.sell_outlined,
-                                  color: Colors.white,
-                                ),
-                              ),
-
-                              SizedBox(width: 20),
-                              IconButton(
-                                onPressed: () {
-                                  selectPriority(context);
-                                },
-                                icon: Icon(
-                                  Icons.flag_outlined,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Spacer(),
-
-                              Icon(
-                                Icons.send_outlined,
-                                color: Color(0xFF8687E7),
-                                size: 28,
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
+              context: context,
+              builder: (context) => AddTaskSheet(),
             );
+            await getTasks();
           },
           backgroundColor: Color(0xff8687E7),
           shape: CircleBorder(),
@@ -181,52 +89,37 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: todos.isEmpty
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : todos.isEmpty
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Center(
-                            child: Image.asset(
-                              "assets/images/checklist_photo.png",
-                              width: 227,
-                              height: 227,
-                            ),
-                          ),
+                          Center(child: Image.asset("assets/images/checklist_photo.png", width: 227, height: 227)),
                           SizedBox(height: 10),
                           Text(
                             'What do you want to do today?',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 10),
                           Text(
                             'Tap + to add your tasks',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
                     )
                   : ListView.builder(
                       padding: EdgeInsets.only(top: 80),
-                      itemCount: todos.length,
+                      itemCount: tasks.length,
                       itemBuilder: (context, index) {
-                        final task = todos[index];
+                        final task = tasks[index];
                         String timeText = "";
 
                         DateTime now = DateTime.now();
-                        if (task.time.year == now.year &&
-                            task.time.month == now.month &&
-                            task.time.day == now.day) {
-                          timeText =
-                              "Today ${task.time.hour}:${task.time.minute.toString().padLeft(2, '0')}";
+                        if (task.time.year == now.year && task.time.month == now.month && task.time.day == now.day) {
+                          timeText = "Today ${task.time.hour}:${task.time.minute.toString().padLeft(2, '0')}";
                         } else {
                           timeText =
                               "${task.time.day}/${task.time.month} ${task.time.hour}:${task.time.minute.toString().padLeft(2, '0')}";
@@ -252,10 +145,7 @@ class _HomePageState extends State<HomePage> {
                         return Padding(
                           padding: const EdgeInsets.only(top: 16),
                           child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Color(0xff363636),
-                            ),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Color(0xff363636)),
                             width: MediaQuery.of(context).size.width * 1,
                             height: 72,
                             child: Row(
@@ -273,10 +163,8 @@ class _HomePageState extends State<HomePage> {
                                       },
                                     ),
                                     Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           task.title,
@@ -301,21 +189,14 @@ class _HomePageState extends State<HomePage> {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: 14,
-                                    top: 23,
-                                  ),
+                                  padding: const EdgeInsets.only(right: 14, top: 23),
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                          color: Todo.getContainerColor(
-                                            task.category,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            5,
-                                          ),
+                                          color: TodoItem.getContainerColor(task.category),
+                                          borderRadius: BorderRadius.circular(5),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(5.0),
@@ -323,9 +204,7 @@ class _HomePageState extends State<HomePage> {
                                             children: [
                                               Icon(
                                                 taskIcon(task.category),
-                                                color: Todo.getIconColor(
-                                                  task.category,
-                                                ),
+                                                color: TodoItem.getIconColor(task.category),
                                               ),
                                               SizedBox(width: 5),
                                               Text(
@@ -343,22 +222,14 @@ class _HomePageState extends State<HomePage> {
                                       SizedBox(width: 10),
                                       Container(
                                         decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff8687E7),
-                                            width: 1.5,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            5,
-                                          ),
+                                          border: Border.all(color: Color(0xff8687E7), width: 1.5),
+                                          borderRadius: BorderRadius.circular(5),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Row(
                                             children: [
-                                              Icon(
-                                                Icons.flag_outlined,
-                                                color: Colors.white,
-                                              ),
+                                              Icon(Icons.flag_outlined, color: Colors.white),
                                               SizedBox(width: 5),
 
                                               Text(
@@ -396,19 +267,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     'Index',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400),
                   ),
                   Container(
                     width: 42,
                     height: 42,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
+                    decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(50)),
                   ),
                 ],
               ),
@@ -420,7 +284,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Future<void> selectCategory(BuildContext context, List<Todo> tasks) async {
+Future<void> selectCategory(BuildContext context, List<TodoItem> tasks) async {
   final List<String> categories = [
     'Grocery',
     'Work',
@@ -442,9 +306,7 @@ Future<void> selectCategory(BuildContext context, List<Todo> tasks) async {
           return Dialog(
             insetPadding: EdgeInsets.symmetric(horizontal: 24),
             backgroundColor: Color(0xff363636),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(4),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(4)),
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -454,23 +316,12 @@ Future<void> selectCategory(BuildContext context, List<Todo> tasks) async {
                     SizedBox(height: 10),
                     Text(
                       "Choose Category",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 10),
 
                     Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            color: Color(0xff979797),
-                            thickness: 1,
-                          ),
-                        ),
-                      ],
+                      children: [Expanded(child: Divider(color: Color(0xff979797), thickness: 1))],
                     ),
                     SizedBox(height: 15),
                     SizedBox(
@@ -496,14 +347,14 @@ Future<void> selectCategory(BuildContext context, List<Todo> tasks) async {
                                   width: 64,
                                   height: 64,
                                   decoration: BoxDecoration(
-                                    color: Todo.getContainerColor(category),
+                                    color: TodoItem.getContainerColor(category),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: IconButton(
                                     onPressed: () {},
                                     icon: Icon(
-                                      Todo.getTaskIcon(category),
-                                      color: Todo.getIconColor(category),
+                                      TodoItem.getTaskIcon(category),
+                                      color: TodoItem.getIconColor(category),
                                       size: 35,
                                     ),
                                   ),
@@ -511,11 +362,7 @@ Future<void> selectCategory(BuildContext context, List<Todo> tasks) async {
                                 SizedBox(height: 5),
                                 Text(
                                   category,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -525,111 +372,10 @@ Future<void> selectCategory(BuildContext context, List<Todo> tasks) async {
                     ),
                     SizedBox(height: 30),
 
-                    MainBtn(
-                      title: "Add Category",
-                      isActive: true,
-                      onPressed: () {},
-                    ),
+                    MainBtn(title: "Add Category", isActive: true, onPressed: () {}),
                   ],
                 ),
               ),
-            ),
-          );
-        },
-      );
-    },
-  );
-}
-
-void selectPriority(BuildContext context) {
-  int selectedPriority = 1;
-
-  showDialog(
-    context: context,
-    builder: (context) {
-      return StatefulBuilder(
-        builder: (context, setDialogState) {
-          return Dialog(
-            insetPadding: EdgeInsets.all(24),
-            backgroundColor: Color(0xff363636),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(4),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: 10),
-
-                Center(
-                  child: Text(
-                    'Task Priority',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 2),
-
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 1,
-
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                color: Color(0xff979797),
-                                thickness: 1,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 22),
-                        Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
-                          alignment: WrapAlignment.start,
-                          children: List.generate(10, (index) {
-                            int currentNum = index + 1;
-                            return PriorityContainer(
-                              text: currentNum,
-                              isSelected: selectedPriority == currentNum,
-                              onTap: () {
-                                setDialogState(() {
-                                  selectedPriority = currentNum;
-                                });
-                              },
-                            );
-                          }),
-                        ),
-
-                        SizedBox(height: 18),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Button(
-                            eleBtnTitle: "Save",
-                            textBtnTitle: "Cancel",
-                            nextPress: () {
-                              Navigator.pop(context, selectedPriority);
-                              ;
-                            },
-                            backPress: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
             ),
           );
         },
@@ -652,11 +398,7 @@ class navItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w400),
         ),
       ],
     );

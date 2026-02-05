@@ -28,20 +28,11 @@ class _SplashScreenState extends State<SplashScreen> {
     // if (!mounted) return;
 
     if (!onboardComplete) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const OnboardingPage()),
-      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OnboardingPage()));
     } else if (!isLoggedIn) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
     }
   }
 
@@ -55,11 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image.asset("assets/images/uptodo.png", width: 113, height: 113),
             Text(
               "UpTodo",
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700, color: Colors.white),
             ),
           ],
         ),

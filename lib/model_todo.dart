@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Todo {
+class TodoItem {
   int id;
   String title;
   String category;
@@ -9,7 +9,7 @@ class Todo {
   DateTime time;
   bool isDone;
 
-  Todo({
+  TodoItem({
     required this.id,
     required this.title,
     required this.category,
@@ -18,6 +18,29 @@ class Todo {
     required this.time,
     this.isDone = false,
   });
+
+  factory TodoItem.fromJson(Map<String, dynamic> jsonData) {
+    return TodoItem(
+      id: jsonData['id'],
+      title: jsonData['title'],
+      category: jsonData['category'],
+      priority: jsonData['priority'],
+      description: jsonData['description'],
+      time: DateTime.parse(jsonData['time']),
+      isDone: jsonData['isDone'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'category': category,
+      'priority': priority,
+      'description': description,
+      'time': time.toString(),
+      'isDone': isDone,
+    };
+  }
 
   static IconData getTaskIcon(String category) {
     const icons = {
@@ -94,9 +117,9 @@ class Todo {
     }
   }
 
-  static List<Todo> tasks() {
+  static List<TodoItem> tasks() {
     return [
-      Todo(
+      TodoItem(
         id: 1,
         title: "Math Homework",
         category: "Grocery",
@@ -105,7 +128,7 @@ class Todo {
         time: DateTime.now().add(Duration(hours: 2)),
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 2,
         title: "Grocery Shopping",
         category: "Work",
@@ -114,7 +137,7 @@ class Todo {
         time: DateTime.now().add(Duration(days: 1)),
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 3,
         title: "Read Book",
         category: "Music",
@@ -123,7 +146,7 @@ class Todo {
         time: DateTime.now().add(Duration(days: 1, hours: 3)),
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 4,
         title: "Workout",
         category: "Health",
@@ -132,7 +155,7 @@ class Todo {
         time: DateTime.now().add(Duration(hours: 5)),
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 5,
         title: "Call Mom",
         category: "Home",
