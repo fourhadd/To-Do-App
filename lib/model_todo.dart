@@ -22,29 +22,6 @@ class TodoItem {
     this.isDone = false,
   });
 
-  factory TodoItem.fromJson(Map<String, dynamic> jsonData) {
-    return TodoItem(
-      id: jsonData['id'],
-      title: jsonData['title'],
-      category: jsonData['category'],
-      priority: jsonData['priority'],
-      description: jsonData['description'],
-      time: DateTime.parse(jsonData['time']),
-      isDone: jsonData['isDone'],
-    );
-  }
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'category': category,
-      'priority': priority,
-      'description': description,
-      'time': time.toString(),
-      'isDone': isDone,
-    };
-  }
-
   static IconData getTaskIcon(String category) {
     const icons = {
       'Grocery': Icons.breakfast_dining,
