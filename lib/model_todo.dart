@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
-class Todo {
+class TodoItem {
   int id;
   String title;
   String category;
-  String priority;
+  int priority;
   String description;
   DateTime time;
+  DateTime dueTime;
+
   bool isDone;
 
-  Todo({
+  TodoItem({
     required this.id,
     required this.title,
     required this.category,
     required this.priority,
     required this.description,
     required this.time,
+    required this.dueTime,
     this.isDone = false,
   });
 
@@ -33,7 +36,7 @@ class Todo {
       'Home': Icons.home_outlined,
       'Create New': Icons.add_circle_outline,
     };
-    return icons[category] ?? Icons.category_outlined;
+    return icons[category] ?? Icons.add_box_outlined;
   }
 
   static Color getIconColor(String category) {
@@ -90,55 +93,65 @@ class Todo {
       case 'Create New':
         return const Color(0xff80FFD1);
       default:
-        return Colors.black;
+        return Colors.grey;
     }
   }
 
-  static List<Todo> tasks() {
+  static List<TodoItem> tasks() {
     return [
-      Todo(
+      TodoItem(
         id: 1,
         title: "Math Homework",
         category: "Grocery",
-        priority: "1",
+        priority: 1,
         description: "Complete algebra exercises",
         time: DateTime.now().add(Duration(hours: 2)),
+        dueTime: DateTime.now().add(Duration(hours: 4)),
+
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 2,
         title: "Grocery Shopping",
         category: "Work",
-        priority: "2",
+        priority: 2,
         description: "Buy vegetables and fruits",
         time: DateTime.now().add(Duration(days: 1)),
+        dueTime: DateTime.now().add(Duration(hours: 4)),
+
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 3,
         title: "Read Book",
         category: "Music",
-        priority: "3",
+        priority: 3,
         description: "Read 30 pages of a novel",
         time: DateTime.now().add(Duration(days: 1, hours: 3)),
+        dueTime: DateTime.now().add(Duration(hours: 4)),
+
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 4,
         title: "Workout",
         category: "Health",
-        priority: "4",
+        priority: 4,
         description: "1-hour gym session",
         time: DateTime.now().add(Duration(hours: 5)),
+        dueTime: DateTime.now().add(Duration(hours: 4)),
+
         isDone: false,
       ),
-      Todo(
+      TodoItem(
         id: 5,
         title: "Call Mom",
         category: "Home",
-        priority: "5",
+        priority: 5,
         description: "Check how she is doing",
         time: DateTime.now().add(Duration(hours: 4)),
+        dueTime: DateTime.now().add(Duration(hours: 4)),
+
         isDone: false,
       ),
     ];
