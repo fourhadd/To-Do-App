@@ -235,32 +235,38 @@ Future<TimeOfDay?> selecTime(BuildContext context) async {
       return Dialog(
         backgroundColor: Color(0xff363636),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 200,
-              child: CupertinoTimerPicker(
-                mode: CupertinoTimerPickerMode.hm,
-                initialTimerDuration: Duration(
-                  hours: selectedTime.hour,
-                  minutes: selectedTime.minute,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 200,
+                child: CupertinoTheme(
+                  data: CupertinoThemeData(brightness: Brightness.dark),
+                  child: CupertinoTimerPicker(
+                    mode: CupertinoTimerPickerMode.hm,
+                    initialTimerDuration: Duration(
+                      hours: selectedTime.hour,
+                      minutes: selectedTime.minute,
+                    ),
+                    onTimerDurationChanged: (duration) {
+                      selectedTime = TimeOfDay(
+                        hour: duration.inHours,
+                        minute: duration.inMinutes.remainder(60),
+                      );
+                    },
+                  ),
                 ),
-                onTimerDurationChanged: (duration) {
-                  selectedTime = TimeOfDay(
-                    hour: duration.inHours,
-                    minute: duration.inMinutes.remainder(60),
-                  );
-                },
               ),
-            ),
-            Button(
-              eleBtnTitle: "Save",
-              textBtnTitle: "Cancel",
-              nextPress: () => Navigator.pop(context, selectedTime),
-              backPress: () => Navigator.pop(context),
-            ),
-          ],
+              Button(
+                eleBtnTitle: "Save",
+                textBtnTitle: "Cancel",
+                nextPress: () => Navigator.pop(context, selectedTime),
+                backPress: () => Navigator.pop(context),
+              ),
+            ],
+          ),
         ),
       );
     },
@@ -320,7 +326,7 @@ Future<String?> selectCategory(BuildContext context) async {
                   final String category = categories[index];
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pop(context, category);
+                      Navigator.pop(context, category.toString());
                     },
                     child: Column(
                       children: [

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/common_widgets.dart';
-import 'package:todo/login_page.dart';
-import 'package:todo/page_indicator.dart';
+import 'package:todo/screens/login_page.dart';
+import 'package:todo/utils/prefs_helper.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -13,12 +12,10 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   Future<void> onboardComplete() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboardingComplete', true);
+    await PrefsHelper.setOnboardingComplete(true);
   }
 
   int currentIndex = 0;
-
   final int pageCount = 3;
   final PageController _imageController = PageController();
   final PageController _textController = PageController();
@@ -43,20 +40,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     TextButton(
                       onPressed: () async {
                         await onboardComplete();
-
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => LoginPage()),
                           (route) => false,
                         );
                       },
-                      child: Text(
-                        "SKIP",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white.withValues(alpha: 0.44),
-                        ),
+                      child: MainText(
+                        text: "SKIP",
+                        fontSize: 16,
+                        color: Colors.white.withValues(alpha: 0.44),
                       ),
                     ),
                     SizedBox(
@@ -71,15 +64,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           _textController.jumpToPage(index);
                         },
                         children: [
-                          onboardimage(
+                          OnboardingImage(
                             assetPath:
                                 "assets/images/firstOnboarding_photo.png",
                           ),
-                          onboardimage(
+                          OnboardingImage(
                             assetPath:
                                 "assets/images/secondOnboarding_photo.png",
                           ),
-                          onboardimage(
+                          OnboardingImage(
                             assetPath:
                                 "assets/images/thirdOnboarding_photo.png",
                           ),
@@ -108,17 +101,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           });
                         },
                         children: [
-                          onboardingText(
+                          OnboardingText(
                             titleText: "Manage your tasks",
                             subText:
                                 "You can easily manage all of your daily tasks in DoMe for free",
                           ),
-                          onboardingText(
+                          OnboardingText(
                             titleText: "Create daily routine",
                             subText:
                                 "In Uptodo  you can create your personalized routine to stay productive",
                           ),
-                          onboardingText(
+                          OnboardingText(
                             titleText: "Orgonaize your tasks",
                             subText:
                                 "You can organize your daily tasks by adding your tasks into separate categories",
@@ -159,65 +152,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class onboardingText extends StatelessWidget {
-  final String titleText;
-  final String subText;
-
-  const onboardingText({
-    super.key,
-    required this.titleText,
-    required this.subText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Text(
-            titleText,
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(height: 42),
-          SizedBox(
-            width: 299,
-            height: 48,
-            child: Text(
-              subText,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class onboardimage extends StatelessWidget {
-  final String assetPath;
-  const onboardimage({super.key, required this.assetPath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 2),
-        Center(child: Image.asset(assetPath, width: 213, height: 277.78)),
-      ],
     );
   }
 }

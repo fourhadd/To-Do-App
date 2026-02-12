@@ -47,13 +47,10 @@ class _RegisterState extends State<Register> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 41),
-              Text(
-                "Register",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
+              MainText(
+                text: "Register",
+                fontSize: 32,
+                fontWeight: FontWeight.w700,
               ),
               SizedBox(height: 23),
               InputField(

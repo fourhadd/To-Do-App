@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo/common_widgets.dart';
 import 'package:todo/model_todo.dart';
 import 'package:todo/picker_functions.dart';
 
@@ -26,6 +29,35 @@ class _AddtaskPageState extends State<AddtaskPage> {
   int? _selectedPriority;
   DateTime? _dueTime;
 
+  Future<List<TodoItem>> loadTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final rawData = prefs.getString("tasks");
+    final jsonDecodedData = rawData == null
+        ? null
+        : json.decode(rawData) as List<dynamic>;
+    final List<TodoItem> tasks = jsonDecodedData == null
+        ? []
+        : jsonDecodedData.map((e) => TodoItem.fromJson(e)).toList();
+
+    return tasks;
+  }
+
+  Future<void> saveTasks(TodoItem todoItem) async {
+    final prefs = await SharedPreferences.getInstance();
+    final rawData = prefs.getString("tasks");
+    final jsonDecodedData = rawData == null
+        ? null
+        : json.decode(rawData) as List<dynamic>;
+    final List<TodoItem> tasks = jsonDecodedData == null
+        ? []
+        : jsonDecodedData.map((e) => TodoItem.fromJson(e)).toList();
+
+    tasks.add(todoItem);
+    final jsonEncodedData = TodoItem.encodeTasks(tasks);
+    // log(jsonEncodedData.toString());
+    await prefs.setString("tasks", jsonEncodedData.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -41,14 +73,7 @@ class _AddtaskPageState extends State<AddtaskPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Add Task",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              MainText(text: "Add Task", fontWeight: FontWeight.w700),
               SizedBox(height: 15),
               TextField(
                 controller: _titleController,
@@ -66,6 +91,7 @@ class _AddtaskPageState extends State<AddtaskPage> {
               ),
               SizedBox(height: 10),
               TextField(
+                controller: _descriptionController,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Description",
@@ -85,7 +111,6 @@ class _AddtaskPageState extends State<AddtaskPage> {
                     icon: Icon(Icons.timer_outlined, color: Colors.white),
                     onPressed: () async {
                       DateTime? pickedDate = await selectDate(context);
-
                       if (pickedDate != null) {
                         setState(() {
                           _dueTime = pickedDate;
@@ -117,13 +142,13 @@ class _AddtaskPageState extends State<AddtaskPage> {
                       final newTask = TodoItem(
                         id: DateTime.now().millisecondsSinceEpoch,
                         title: _titleController.text,
-                        category: _selectedCategory ?? "work",
+                        category: _selectedCategory ?? "default",
                         priority: _selectedPriority ?? 1,
                         description: _descriptionController.text,
                         time: DateTime.now(),
                         dueTime: _dueTime ?? DateTime.now(),
                       );
-                      widget.TodoItems.add(newTask);
+                      await saveTasks(newTask);
 
                       Navigator.pop(context);
                     },

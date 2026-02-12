@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/home_page.dart';
-import 'package:todo/login_page.dart';
-import 'package:todo/onboarding_page.dart';
+import 'package:todo/common_widgets.dart';
+import 'package:todo/screens/home_page.dart';
+import 'login_page.dart';
+import 'package:todo/screens/onboarding_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await Future.delayed(const Duration(seconds: 1));
 
-    // if (!mounted) return;
+    if (!mounted) return;
 
     if (!onboardComplete) {
       Navigator.pushReplacement(
@@ -53,14 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("assets/images/uptodo.png", width: 113, height: 113),
-            Text(
-              "UpTodo",
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
+            MainText(text: "UpTodo", fontSize: 40, fontWeight: FontWeight.w700),
           ],
         ),
       ),

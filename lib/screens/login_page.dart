@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/common_widgets.dart';
-import 'package:todo/home_page.dart';
+import 'package:todo/screens/home_page.dart';
+import 'package:todo/utils/prefs_helper.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,9 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   Future<void> isLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboardingComplete', true);
-    await prefs.setBool('isLoggedIn', true);
+    await PrefsHelper.setLoggedIn(true);
   }
 
   final TextEditingController _usernameController = TextEditingController();
@@ -57,13 +55,10 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 41),
-                      Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
+                      MainText(
+                        text: "Login",
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
                       ),
                       SizedBox(height: 53),
                       InputField(

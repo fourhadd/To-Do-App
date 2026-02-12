@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/home_page.dart';
-import 'package:todo/login_page.dart';
-import 'package:todo/register.dart';
+import 'package:todo/screens/home_page.dart';
+import 'package:todo/screens/login_page.dart';
+import 'package:todo/screens/register.dart';
 
 class MainBtn extends StatelessWidget {
   final String title;
@@ -349,6 +349,138 @@ class PriorityContainer extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class navItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const navItem({super.key, required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: Colors.white, size: 30),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MainText extends StatelessWidget {
+  final String text;
+  final Color color;
+  final double fontSize;
+  final FontWeight fontWeight;
+
+  const MainText({
+    super.key,
+    this.text = 'Index',
+    this.color = Colors.white,
+    this.fontSize = 20,
+    this.fontWeight = FontWeight.w400,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      ),
+    );
+  }
+}
+
+class OnboardingText extends StatelessWidget {
+  final String titleText;
+  final String subText;
+
+  const OnboardingText({
+    super.key,
+    required this.titleText,
+    required this.subText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Text(
+            titleText,
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 42),
+          SizedBox(
+            width: 299,
+            height: 48,
+            child: Text(
+              subText,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OnboardingImage extends StatelessWidget {
+  final String assetPath;
+
+  const OnboardingImage({super.key, required this.assetPath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 2),
+        Center(child: Image.asset(assetPath, width: 213, height: 277.78)),
+      ],
+    );
+  }
+}
+
+class PageIndicator extends StatelessWidget {
+  final bool isActive;
+  const PageIndicator({super.key, this.isActive = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 26.28,
+      height: 4,
+      decoration: BoxDecoration(
+        color: isActive
+            ? Colors.white.withValues(alpha: 0.87)
+            : Color(0xffAFAFAF),
+        borderRadius: BorderRadius.circular(56),
       ),
     );
   }
