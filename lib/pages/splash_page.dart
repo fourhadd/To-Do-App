@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/common_widgets.dart';
-import 'package:todo/screens/home_page.dart';
+import 'package:todo/pages/homePage/home_page.dart';
 import 'login_page.dart';
-import 'package:todo/screens/onboarding_page.dart';
+import 'package:todo/pages/onboarding/onboarding_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

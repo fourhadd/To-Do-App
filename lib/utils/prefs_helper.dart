@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/model_todo.dart';
 import 'dart:convert';
+
+import 'package:todo/models/model_todo.dart';
 
 class PrefsHelper {
   static Future<void> setOnboardingComplete(bool value) async {

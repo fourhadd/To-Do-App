@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/common_widgets.dart';
-import 'package:todo/screens/login_page.dart';
+import 'package:todo/pages/login_page.dart';
+import 'package:todo/pages/onboarding/onboarding_widgets.dart';
 import 'package:todo/utils/prefs_helper.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -123,7 +124,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               ),
               Spacer(),
-
               Button(
                 eleBtnTitle: currentIndex == pageCount - 1
                     ? "Get Started"
@@ -132,7 +132,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 nextPress: () async {
                   if (currentIndex == pageCount - 1) {
                     await onboardComplete();
-
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => LoginPage()),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/home_page.dart';
-import 'package:todo/screens/login_page.dart';
-import 'package:todo/screens/register.dart';
+import 'package:todo/pages/homePage/home_page.dart';
+import 'package:todo/pages/login_page.dart';
+import 'package:todo/pages/register_page.dart';
+import 'package:todo/theme/app_color.dart';
 
 class MainBtn extends StatelessWidget {
   final String title;
@@ -23,8 +24,8 @@ class MainBtn extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: isActive
-              ? Color(0xff8875FF)
-              : Color(0xff8875FF).withValues(alpha: 0.5),
+              ? AppColor.primaryColor
+              : AppColor.primaryColor.withValues(alpha: 0.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -152,7 +153,7 @@ class _LogRegFooterState extends State<LogRegFooter> {
             width: MediaQuery.of(context).size.width * 1,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: Color(0xff8875FF), width: 1),
+              border: Border.all(color: AppColor.primaryColor, width: 1),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -183,7 +184,7 @@ class _LogRegFooterState extends State<LogRegFooter> {
           width: MediaQuery.of(context).size.width * 1,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: Color(0xff8875FF), width: 1),
+            border: Border.all(color: AppColor.primaryColor, width: 1),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -292,7 +293,7 @@ class Button extends StatelessWidget {
         ElevatedButton(
           onPressed: nextPress,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff8875FF),
+            backgroundColor: AppColor.primaryColor,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
@@ -305,74 +306,6 @@ class Button extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class PriorityContainer extends StatelessWidget {
-  final int text;
-  final bool isSelected; // Əlavə olundu
-  final VoidCallback onTap;
-  const PriorityContainer({
-    super.key,
-    required this.text,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 64,
-        height: 64,
-        decoration: BoxDecoration(
-          color: isSelected ? Color(0xff8687E7) : Color(0xff272727),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.flag_outlined, color: Colors.white),
-            SizedBox(height: 4),
-            Text(
-              text.toString(),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class navItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const navItem({super.key, required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: Colors.white, size: 30),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
           ),
         ),
       ],
@@ -403,66 +336,6 @@ class MainText extends StatelessWidget {
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),
-    );
-  }
-}
-
-class OnboardingText extends StatelessWidget {
-  final String titleText;
-  final String subText;
-
-  const OnboardingText({
-    super.key,
-    required this.titleText,
-    required this.subText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Text(
-            titleText,
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(height: 42),
-          SizedBox(
-            width: 299,
-            height: 48,
-            child: Text(
-              subText,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class OnboardingImage extends StatelessWidget {
-  final String assetPath;
-
-  const OnboardingImage({super.key, required this.assetPath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 2),
-        Center(child: Image.asset(assetPath, width: 213, height: 277.78)),
-      ],
     );
   }
 }

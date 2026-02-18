@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.5.4
   table_calendar: ^3.2.0
   cupertino_date_time_picker: ^0.0.4
+  provider: ^6.1.5+1
 flutter_icons:
   android: true
   ios: true

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/pages/splash_page.dart';
+import 'package:todo/utils/provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,5 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(create: (_) => TodoProvider(), child: const MyApp()),
+  );
 }

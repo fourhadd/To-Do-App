@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/common_widgets.dart';
-import 'package:todo/screens/home_page.dart';
+import 'package:todo/pages/homePage/home_page.dart';
 import 'package:todo/utils/prefs_helper.dart';
 
 class LoginPage extends StatefulWidget {
