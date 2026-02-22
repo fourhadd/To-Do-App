@@ -1,7 +1,8 @@
+// pages/splash_page.dart
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/common_widgets.dart';
-import 'package:todo/pages/homePage/home_page.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/pages/home_page/home_page.dart';
 import 'login_page.dart';
 import 'package:todo/pages/onboarding/onboarding_page.dart';
 

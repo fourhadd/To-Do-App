@@ -1,5 +1,7 @@
+// pages/home_page/home_page_widgets.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/models/model_todo.dart';
 import 'package:todo/theme/app_color.dart';
 import 'package:todo/utils/category_config/category_config.dart';
@@ -26,7 +28,7 @@ class deleteQueryDialog extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MainText(
-                text: "Delete Task",
+                text: AppLocalizations.of(context)!.deleteTask,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
@@ -39,19 +41,21 @@ class deleteQueryDialog extends StatelessWidget {
               ),
               SizedBox(height: 24),
               MainText(
-                text: "Are You sure you want to delete this task?",
+                text: AppLocalizations.of(context)!.deleteConfirmation,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
               MainText(
-                text: "Task title: " + task.title,
+                text:
+                    AppLocalizations.of(context)!.deleteConfirmationSub +
+                    task.title,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
               SizedBox(height: 20),
               Button(
-                eleBtnTitle: "Delete",
-                textBtnTitle: "Cancel",
+                eleBtnTitle: AppLocalizations.of(context)!.deleteTask,
+                textBtnTitle: AppLocalizations.of(context)!.cancel,
                 nextPress: () {
                   Navigator.pop(context, true);
                 },
@@ -82,10 +86,10 @@ class emptyScreen extends StatelessWidget {
             height: 227,
           ),
           SizedBox(height: 10),
-          MainText(text: 'What do you want to do today?'),
+          MainText(text: AppLocalizations.of(context)!.emptyStateTitle),
           SizedBox(height: 10),
           MainText(
-            text: 'Tap + to add your tasks',
+            text: AppLocalizations.of(context)!.emptyStateDesc,
             fontSize: 16,
             color: Colors.white.withValues(alpha: 0.87),
           ),

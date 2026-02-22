@@ -1,5 +1,7 @@
+// common_widgets.dart
 import 'package:flutter/material.dart';
-import 'package:todo/pages/homePage/home_page.dart';
+import 'package:todo/l10n/app_localizations.dart';
+import 'package:todo/pages/home_page/home_page.dart';
 import 'package:todo/pages/login_page.dart';
 import 'package:todo/pages/register_page.dart';
 import 'package:todo/theme/app_color.dart';
@@ -129,7 +131,7 @@ class _LogRegFooterState extends State<LogRegFooter> {
           children: [
             Expanded(child: Divider(color: Color(0xff979797), thickness: 1)),
             Text(
-              " or ",
+              AppLocalizations.of(context)!.or,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -166,8 +168,8 @@ class _LogRegFooterState extends State<LogRegFooter> {
                 SizedBox(width: 10),
                 Text(
                   widget.isRegister
-                      ? "Register with Google"
-                      : "Login with Google",
+                      ? AppLocalizations.of(context)!.registerWithGoogle
+                      : AppLocalizations.of(context)!.loginWithGoogle,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -200,7 +202,9 @@ class _LogRegFooterState extends State<LogRegFooter> {
               ),
               SizedBox(width: 10),
               Text(
-                widget.isRegister ? "Register with Apple" : "Login with Apple",
+                widget.isRegister
+                    ? AppLocalizations.of(context)!.registerWithApple
+                    : AppLocalizations.of(context)!.loginWithApple,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -233,15 +237,17 @@ class _LogRegFooterState extends State<LogRegFooter> {
               child: RichText(
                 text: TextSpan(
                   text: widget.isRegister
-                      ? "Already have an account? "
-                      : "Don't have an account? ",
+                      ? AppLocalizations.of(context)!.alreadyHaveAccount + " "
+                      : AppLocalizations.of(context)!.alreadyHaveAccount + " ",
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.87),
                     fontSize: 12,
                   ),
                   children: [
                     TextSpan(
-                      text: widget.isRegister ? "Login" : "Register",
+                      text: widget.isRegister
+                          ? AppLocalizations.of(context)!.login
+                          : AppLocalizations.of(context)!.register,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

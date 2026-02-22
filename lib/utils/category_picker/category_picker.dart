@@ -1,4 +1,6 @@
+// utils/category_picker/category_picker.dart
 import 'package:flutter/material.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/theme/app_color.dart';
 
 import 'package:todo/utils/category_config/category_config.dart';
@@ -32,7 +34,7 @@ Future<String?> selectCategory(BuildContext context) async {
             children: [
               SizedBox(height: 10),
               Text(
-                "Choose Category",
+                AppLocalizations.of(context)!.chooseCategory,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

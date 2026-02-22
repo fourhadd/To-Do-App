@@ -1,5 +1,7 @@
+// utils/priority_picker/priority_picker.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/theme/app_color.dart';
 
 Future<int?> selectPriority(BuildContext context) async {
@@ -23,7 +25,7 @@ Future<int?> selectPriority(BuildContext context) async {
 
                 Center(
                   child: Text(
-                    'Task Priority',
+                    AppLocalizations.of(context)!.taskPriority,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -75,8 +77,8 @@ Future<int?> selectPriority(BuildContext context) async {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Button(
-                            eleBtnTitle: "Save",
-                            textBtnTitle: "Cancel",
+                            eleBtnTitle: AppLocalizations.of(context)!.save,
+                            textBtnTitle: AppLocalizations.of(context)!.cancel,
                             nextPress: () {
                               Navigator.pop(context, selectedPriority);
                             },

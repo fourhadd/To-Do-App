@@ -1,5 +1,6 @@
+// pages/task_info_page/task_info_widgets.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
 import 'package:todo/models/model_todo.dart';
 import 'package:todo/theme/app_color.dart';
 

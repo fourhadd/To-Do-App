@@ -1,3 +1,4 @@
+// utils/category_config/category_config.dart
 import 'package:flutter/material.dart';
 import 'package:todo/theme/app_color.dart';
 

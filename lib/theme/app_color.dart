@@ -1,3 +1,4 @@
+// theme/app_color.dart
 import 'package:flutter/material.dart';
 
 class AppColor {
@@ -6,6 +7,10 @@ class AppColor {
 
   static const Color backgroundColor = Colors.black;
   static const Color cardColor = Color(0xff363636);
+  static const Color textColor = Colors.white;
+  static const Color warning = Colors.red;
+
+  static const Color profileTextTitleColor = Color(0xFFAFAFAF);
 
   static const Color groceryIcon = Color(0xff21A300);
   static const Color workIcon = Color(0xffA31D00);

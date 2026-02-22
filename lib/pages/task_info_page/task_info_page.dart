@@ -1,7 +1,9 @@
+// pages/task_info_page/task_info_page.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/models/model_todo.dart';
-import 'package:todo/pages/task_info/task_info_widgets.dart';
+import 'package:todo/pages/task_info_page/task_info_widgets.dart';
 import 'package:todo/utils/category_config/category_config.dart';
 
 class TaskInfo extends StatefulWidget {
@@ -75,27 +77,27 @@ class _TaskInfoState extends State<TaskInfo> {
             SizedBox(height: 38),
             taskInfo(
               leadingIcon: Icons.timer_outlined,
-              titleText: 'Task Time :',
+              titleText: AppLocalizations.of(context)!.taskTimeLabel,
               trailingText: task.formattedDueTime,
             ),
             taskInfo(
               leadingIcon: Icons.sell_outlined,
-              titleText: 'Task Category :',
+              titleText: AppLocalizations.of(context)!.taskCategoryLabel,
               trailingText: task.category,
               trailingIcon: CategoryConfig.getIcon(task.category),
               trailingIconColor: CategoryConfig.getIconColor(task.category),
             ),
             taskInfo(
               leadingIcon: Icons.flag_outlined,
-              titleText: 'Task Priority :',
+              titleText: AppLocalizations.of(context)!.taskPriorityLabel,
               trailingText: task.priority.toString(),
               trailingIcon: Icons.flag_outlined,
               trailingIconColor: Colors.white,
             ),
             taskInfo(
               leadingIcon: Icons.fork_left_outlined,
-              titleText: 'Task Date :',
-              trailingText: "Add Sub-Task",
+              titleText: AppLocalizations.of(context)!.taskTimeLabel,
+              trailingText: AppLocalizations.of(context)!.addSubTask,
             ),
 
             TextButton.icon(
@@ -104,7 +106,7 @@ class _TaskInfoState extends State<TaskInfo> {
               },
               icon: Icon(Icons.delete_outline, color: Colors.red, size: 35),
               label: MainText(
-                text: "Delete Task",
+                text: AppLocalizations.of(context)!.deleteTask,
                 fontSize: 16,
                 color: Colors.red,
               ),

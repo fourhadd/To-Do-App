@@ -1,7 +1,9 @@
+// utils/time_picker/time_picker.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/theme/app_color.dart';
-import '../../../common_widgets.dart';
+import '../../widgets/common_widgets.dart';
 
 Future<TimeOfDay?> selecTime(BuildContext context) async {
   TimeOfDay selectedTime = TimeOfDay.now();
@@ -37,8 +39,8 @@ Future<TimeOfDay?> selecTime(BuildContext context) async {
                 ),
               ),
               Button(
-                eleBtnTitle: "Save",
-                textBtnTitle: "Cancel",
+                eleBtnTitle: AppLocalizations.of(context)!.save,
+                textBtnTitle: AppLocalizations.of(context)!.cancel,
                 nextPress: () => Navigator.pop(context, selectedTime),
                 backPress: () => Navigator.pop(context),
               ),

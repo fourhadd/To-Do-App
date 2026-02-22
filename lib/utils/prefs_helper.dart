@@ -1,3 +1,4 @@
+// utils/prefs_helper.dart
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -72,5 +73,17 @@ class PrefsHelper {
   static Future<String> getString(String key) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(key) ?? '';
+  }
+
+  static const String _languageKey = 'language';
+
+  static Future<void> saveLanguage(String langCode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_languageKey, langCode);
+  }
+
+  static Future<String?> getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_languageKey);
   }
 }

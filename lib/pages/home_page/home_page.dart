@@ -1,10 +1,12 @@
+// pages/home_page/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/pages/add_task/addTaskPage.dart';
-import 'package:todo/common_widgets.dart';
-import 'package:todo/pages/homePage/home_page_widgets.dart';
-import 'package:todo/pages/profile_info_page.dart';
-import 'package:todo/pages/task_info/task_info_page.dart';
+import 'package:todo/l10n/app_localizations.dart';
+import 'package:todo/pages/add_task_page/addTaskPage.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/pages/home_page/home_page_widgets.dart';
+import 'package:todo/pages/profile_page/profile.dart';
+import 'package:todo/pages/task_info_page/task_info_page.dart';
 import 'package:todo/theme/app_color.dart';
 import 'package:todo/utils/provider.dart';
 
@@ -34,16 +36,14 @@ class _HomePageState extends State<HomePage> {
         actionsPadding: EdgeInsets.symmetric(horizontal: 24),
         leadingWidth: 80,
         backgroundColor: Colors.black,
-        title: MainText(text: "Index", fontSize: 20),
+        title: MainText(
+          text: AppLocalizations.of(context)!.appName,
+          fontSize: 20,
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.menu),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProfileInfo()),
-            );
-          },
+          onPressed: () {},
           iconSize: 30,
           color: Colors.white.withValues(alpha: 0.87),
         ),
@@ -64,9 +64,26 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            navItem(icon: Icons.home_outlined, label: "Home"),
-            navItem(icon: Icons.calendar_month_outlined, label: "Calendar"),
-            navItem(icon: Icons.person_outline_outlined, label: "Profile"),
+            navItem(
+              icon: Icons.home_outlined,
+              label: AppLocalizations.of(context)!.home,
+            ),
+            navItem(
+              icon: Icons.calendar_month_outlined,
+              label: AppLocalizations.of(context)!.calendar,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profile()),
+                );
+              },
+              child: navItem(
+                icon: Icons.person_outline_outlined,
+                label: AppLocalizations.of(context)!.profile,
+              ),
+            ),
           ],
         ),
       ),

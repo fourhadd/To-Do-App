@@ -1,6 +1,8 @@
+// utils/date_picker/date_picker.dart
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/theme/app_color.dart';
 import 'package:todo/utils/time_picker/time_picker.dart';
 
@@ -95,8 +97,8 @@ Future<DateTime?> selectDate(BuildContext context) {
                   ),
                   SizedBox(height: 23),
                   Button(
-                    eleBtnTitle: "Choose Time",
-                    textBtnTitle: "Cancel",
+                    eleBtnTitle: AppLocalizations.of(context)!.chooseTime,
+                    textBtnTitle: AppLocalizations.of(context)!.cancel,
                     nextPress: () async {
                       {
                         TimeOfDay? pickedTime = await selecTime(context);

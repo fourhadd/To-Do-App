@@ -1,5 +1,7 @@
+// pages/register_page.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -48,33 +50,33 @@ class _RegisterState extends State<Register> {
             children: [
               SizedBox(height: 41),
               MainText(
-                text: "Register",
+                text: AppLocalizations.of(context)!.register,
                 fontSize: 32,
                 fontWeight: FontWeight.w700,
               ),
               SizedBox(height: 23),
               InputField(
-                titleText: "Username",
-                hintText: "Enter your username",
+                titleText: AppLocalizations.of(context)!.username,
+                hintText: AppLocalizations.of(context)!.usernamePlaceholder,
                 controller: _usernameController,
               ),
               SizedBox(height: 25),
               InputField(
-                titleText: "Password",
+                titleText: AppLocalizations.of(context)!.password,
                 hintText: ".............",
                 controller: _passwordController,
                 isPassword: true,
               ),
               SizedBox(height: 25),
               InputField(
-                titleText: "Confirm Password",
+                titleText: AppLocalizations.of(context)!.confirmPassword,
                 hintText: ".............",
                 controller: _confirmpasswordController,
                 isPassword: true,
               ),
               SizedBox(height: 40),
               MainBtn(
-                title: "Register",
+                title: AppLocalizations.of(context)!.register,
                 isActive: isFormFilled,
                 onPressed: () {},
               ),

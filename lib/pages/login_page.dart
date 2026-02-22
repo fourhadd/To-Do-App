@@ -1,6 +1,8 @@
+// pages/login_page.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
-import 'package:todo/pages/homePage/home_page.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
+import 'package:todo/pages/home_page/home_page.dart';
 import 'package:todo/utils/prefs_helper.dart';
 
 class LoginPage extends StatefulWidget {
@@ -56,25 +58,27 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       SizedBox(height: 41),
                       MainText(
-                        text: "Login",
+                        text: AppLocalizations.of(context)!.login,
                         fontSize: 32,
                         fontWeight: FontWeight.w700,
                       ),
                       SizedBox(height: 53),
                       InputField(
-                        titleText: "Username",
-                        hintText: "Enter your Username",
+                        titleText: AppLocalizations.of(context)!.username,
+                        hintText: AppLocalizations.of(
+                          context,
+                        )!.usernamePlaceholder,
                         controller: _usernameController,
                       ),
                       SizedBox(height: 25),
                       InputField(
-                        titleText: "Password",
+                        titleText: AppLocalizations.of(context)!.password,
                         hintText: "........",
                         controller: _passwordController,
                       ),
                       SizedBox(height: 69),
                       MainBtn(
-                        title: "Login",
+                        title: AppLocalizations.of(context)!.login,
                         isActive: isFormFilled,
                         onPressed: () async {
                           await isLogin();

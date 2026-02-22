@@ -1,5 +1,7 @@
+// pages/onboarding/onboarding_page.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/pages/login_page.dart';
 import 'package:todo/pages/onboarding/onboarding_widgets.dart';
 import 'package:todo/utils/prefs_helper.dart';
@@ -48,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         );
                       },
                       child: MainText(
-                        text: "SKIP",
+                        text: AppLocalizations.of(context)!.skip,
                         fontSize: 16,
                         color: Colors.white.withValues(alpha: 0.44),
                       ),
@@ -103,19 +105,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         },
                         children: [
                           OnboardingText(
-                            titleText: "Manage your tasks",
-                            subText:
-                                "You can easily manage all of your daily tasks in DoMe for free",
+                            titleText: AppLocalizations.of(
+                              context,
+                            )!.manageTasksTitle,
+                            subText: AppLocalizations.of(
+                              context,
+                            )!.manageTasksDesc,
                           ),
                           OnboardingText(
-                            titleText: "Create daily routine",
-                            subText:
-                                "In Uptodo  you can create your personalized routine to stay productive",
+                            titleText: AppLocalizations.of(
+                              context,
+                            )!.createRoutineTitle,
+                            subText: AppLocalizations.of(
+                              context,
+                            )!.createRoutineDesc,
                           ),
                           OnboardingText(
-                            titleText: "Orgonaize your tasks",
-                            subText:
-                                "You can organize your daily tasks by adding your tasks into separate categories",
+                            titleText: AppLocalizations.of(
+                              context,
+                            )!.organizeTasksTitle,
+                            subText: AppLocalizations.of(
+                              context,
+                            )!.organizeTasksDesc,
                           ),
                         ],
                       ),
@@ -126,9 +137,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Spacer(),
               Button(
                 eleBtnTitle: currentIndex == pageCount - 1
-                    ? "Get Started"
-                    : "Next",
-                textBtnTitle: "back",
+                    ? AppLocalizations.of(context)!.getStarted
+                    : AppLocalizations.of(context)!.next,
+                textBtnTitle: AppLocalizations.of(context)!.back,
                 nextPress: () async {
                   if (currentIndex == pageCount - 1) {
                     await onboardComplete();

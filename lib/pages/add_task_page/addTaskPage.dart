@@ -1,7 +1,9 @@
+// pages/add_task_page/addTaskPage.dart
 import 'package:flutter/material.dart';
-import 'package:todo/common_widgets.dart';
+import 'package:todo/widgets/common_widgets.dart';
+import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/models/model_todo.dart';
-import 'package:todo/pages/add_task/add_task_widgets.dart';
+import 'package:todo/pages/add_task_page/add_task_widgets.dart';
 
 class AddtaskPage extends StatefulWidget {
   final List<TodoItem> TodoItems;
@@ -39,14 +41,17 @@ class _AddtaskPageState extends State<AddtaskPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              MainText(text: "Add Task", fontWeight: FontWeight.w700),
+              MainText(
+                text: AppLocalizations.of(context)!.addTask,
+                fontWeight: FontWeight.w700,
+              ),
               SizedBox(height: 15),
               TextField(
                 controller: _titleController,
                 style: const TextStyle(color: Colors.white),
                 // autofocus: true,
                 decoration: InputDecoration(
-                  hintText: "Do math homework",
+                  hintText: AppLocalizations.of(context)!.taskTitlePlaceholder,
                   hintStyle: const TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.w400,
@@ -60,7 +65,9 @@ class _AddtaskPageState extends State<AddtaskPage> {
                 controller: _descriptionController,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  hintText: "Description",
+                  hintText: AppLocalizations.of(
+                    context,
+                  )!.descriptionPlaceholder,
                   hintStyle: const TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.w400,
