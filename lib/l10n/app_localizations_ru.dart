@@ -75,10 +75,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get registerWithApple => 'Зарегистрироваться через Apple';
 
   @override
-  String get noAccount => 'Нет аккаунта? Зарегистрируйтесь';
+  String get noAccount => 'Нет аккаунта? ';
 
   @override
-  String get alreadyHaveAccount => 'Уже есть аккаунт? Войти';
+  String get alreadyHaveAccount => 'Уже есть аккаунт? ';
 
   @override
   String get index => 'Индекс';
@@ -253,4 +253,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get language => 'Языки';
+
+  @override
+  String get errorEmptyFields => 'Поля не могут быть пустыми';
+
+  @override
+  String get errorPasswordMismatch => 'Пароли не совпадают';
+
+  @override
+  String get errorPasswordShort => 'Пароль должен быть не менее 6 символов';
+
+  @override
+  String get errorUsernamePasswordEmpty => 'Имя пользователя и пароль не могут быть пустыми';
+
+  @override
+  String get errorInvalidCredentials => 'Неверное имя пользователя или пароль';
 }

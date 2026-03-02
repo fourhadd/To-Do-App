@@ -21,8 +21,8 @@
 "loginWithApple": "Apple ile giriş yap",
 "registerWithGoogle": "Google ile kayıt ol",
 "registerWithApple": "Apple ile kayıt ol",
-"noAccount": "Hesabınız yok mu? Kayıt olun",
-"alreadyHaveAccount": "Zaten hesabınız var mı? Giriş yapın",
+"noAccount": "Hesabınız yok mu? ",
+"alreadyHaveAccount": "Zaten hesabınız var mı? ",
 "index": "İndeks",
 "calendar": "Takvim",
 "focuse": "Odaklan",
@@ -80,5 +80,10 @@
 "importFromGoogleDrive": "Google Drive'dan İçe Aktar",
 "enterOldPassword": "Eski şifreyi girin",
 "enterNewPassword": "Yeni şifreyi girin",
-"language": "Diller"
+"language": "Diller",
+"errorEmptyFields": "Alanlar boş olamaz",
+"errorPasswordMismatch": "Şifreler aynı değil",
+"errorPasswordShort": "Şifre en az 6 karakter olmalıdır",
+"errorUsernamePasswordEmpty": "Kullanıcı adı ve şifre boş olamaz",
+"errorInvalidCredentials": "Kullanıcı adı veya şifre yanlış"
 }

@@ -43,6 +43,8 @@ dependencies:
   cupertino_date_time_picker: ^0.0.4
   provider: ^6.1.5+1
   flutter_gen: ^5.10.0
+  flutter_screenutil: ^5.9.3
+  get_it: ^9.2.1
 flutter_icons:
   android: true
   ios: true
@@ -87,7 +89,7 @@ flutter:
     - assets/images/Turkish_flag.png
     - assets/images/Russian_flag.png
     - assets/images/English_flag.png
-
+    - assets/images/apple_icon.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

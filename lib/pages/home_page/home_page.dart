@@ -1,6 +1,7 @@
 // pages/home_page/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/pages/add_task_page/addTaskPage.dart';
 import 'package:todo/widgets/common_widgets.dart';
@@ -18,48 +19,40 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void initState() {
-    super.initState();
-
-    Future.microtask(() {
-      context.read<TodoProvider>().loadTasksFromPrefs();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final provider = context.watch<TodoProvider>();
     final tasks = provider.tasks;
+
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
-        actionsPadding: EdgeInsets.symmetric(horizontal: 24),
-        leadingWidth: 80,
+        toolbarHeight: 80.h,
+        actionsPadding: EdgeInsets.symmetric(horizontal: 24.w),
+        leadingWidth: 80.w,
         backgroundColor: Colors.black,
         title: MainText(
           text: AppLocalizations.of(context)!.appName,
-          fontSize: 20,
+          fontSize: 20.sp,
         ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {},
-          iconSize: 30,
+          iconSize: 30.sp,
           color: Colors.white.withValues(alpha: 0.87),
         ),
         actions: [
           Container(
-            width: 42,
-            height: 42,
+            width: 42.w,
+            height: 42.h,
             decoration: BoxDecoration(
               color: Colors.blue,
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(50.r),
             ),
           ),
         ],
       ),
       bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height * 0.1,
+        height: 80.h,
         color: AppColor.cardColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -89,8 +82,8 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: SizedBox(
-        width: 64,
-        height: 64,
+        width: 64.w,
+        height: 64.h,
         child: FloatingActionButton(
           onPressed: () async {
             await showModalBottomSheet(
@@ -102,21 +95,21 @@ class _HomePageState extends State<HomePage> {
           },
           backgroundColor: AppColor.secondaryColor,
           shape: CircleBorder(),
-          child: Icon(Icons.add, color: Colors.white, size: 28),
+          child: Icon(Icons.add, color: Colors.white, size: 28.sp),
         ),
       ),
       body: SafeArea(
         child: tasks.isEmpty
             ? emptyScreen()
             : ListView.builder(
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   final task = tasks[index];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 8,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 8.h,
                     ),
                     child: GestureDetector(
                       onTap: () async {
@@ -136,9 +129,7 @@ class _HomePageState extends State<HomePage> {
                             barrierDismissible: true,
                             context: context,
                             builder: (context) => Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 24.0,
-                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 24.w),
                               child: deleteQueryDialog(task: task),
                             ),
                           );
@@ -149,34 +140,37 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(5.r),
                           color: AppColor.cardColor,
                         ),
-                        height: 72,
+                        height: 72.h,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Checkbox(
-                                  shape: CircleBorder(),
-                                  value: task.isDone,
-                                  onChanged: (value) {
-                                    context.read<TodoProvider>().toggleTask(
-                                      task.id,
-                                      value!,
-                                    );
-                                  },
+                                Center(
+                                  child: Checkbox(
+                                    shape: CircleBorder(),
+                                    value: task.isDone,
+                                    onChanged: (value) {
+                                      context.read<TodoProvider>().toggleTask(
+                                        task.id,
+                                        value!,
+                                      );
+                                    },
+                                  ),
                                 ),
+                                SizedBox(width: 8.w),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    MainText(text: task.title, fontSize: 16),
-                                    SizedBox(height: 6),
+                                    MainText(text: task.title, fontSize: 16.sp),
+                                    SizedBox(height: 6.h),
                                     MainText(
                                       text: task.formattedDueTime,
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       color: Colors.white.withValues(
                                         alpha: 0.87,
                                       ),
@@ -188,9 +182,9 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               children: [
                                 TaskCategoryView(task: task),
-                                SizedBox(width: 16),
+                                SizedBox(width: 16.w),
                                 TaskPriorityView(task: task),
-                                SizedBox(width: 10),
+                                SizedBox(width: 10.w),
                               ],
                             ),
                           ],

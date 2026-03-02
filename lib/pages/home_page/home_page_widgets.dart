@@ -5,6 +5,7 @@ import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/models/model_todo.dart';
 import 'package:todo/theme/app_color.dart';
 import 'package:todo/utils/category_config/category_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class deleteQueryDialog extends StatelessWidget {
   const deleteQueryDialog({super.key, required this.task});
@@ -14,57 +15,52 @@ class deleteQueryDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(4),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
       insetPadding: EdgeInsets.zero,
       backgroundColor: AppColor.cardColor,
       child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 5),
-        child: Container(
-          decoration: BoxDecoration(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              MainText(
-                text: AppLocalizations.of(context)!.deleteTask,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-              SizedBox(height: 10),
-              Divider(
-                color: Color(0xff979797),
-                thickness: 1,
-                indent: 8,
-                endIndent: 8,
-              ),
-              SizedBox(height: 24),
-              MainText(
-                text: AppLocalizations.of(context)!.deleteConfirmation,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-              MainText(
-                text:
-                    AppLocalizations.of(context)!.deleteConfirmationSub +
-                    task.title,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(height: 20),
-              Button(
-                eleBtnTitle: AppLocalizations.of(context)!.deleteTask,
-                textBtnTitle: AppLocalizations.of(context)!.cancel,
-                nextPress: () {
-                  Navigator.pop(context, true);
-                },
-                backPress: () {
-                  Navigator.pop(context, false);
-                },
-              ),
-            ],
-          ),
+        padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 10.h, bottom: 5.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            MainText(
+              text: AppLocalizations.of(context)!.deleteTask,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w700,
+            ),
+            SizedBox(height: 10.h),
+            Divider(
+              color: Color(0xff979797),
+              thickness: 1,
+              indent: 8.w,
+              endIndent: 8.w,
+            ),
+            SizedBox(height: 24.h),
+            MainText(
+              text: AppLocalizations.of(context)!.deleteConfirmation,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w500,
+            ),
+            MainText(
+              text:
+                  AppLocalizations.of(context)!.deleteConfirmationSub +
+                  task.title,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w500,
+            ),
+            SizedBox(height: 20.h),
+            Button(
+              eleBtnTitle: AppLocalizations.of(context)!.deleteTask,
+              textBtnTitle: AppLocalizations.of(context)!.cancel,
+              nextPress: () {
+                Navigator.pop(context, true);
+              },
+              backPress: () {
+                Navigator.pop(context, false);
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -82,16 +78,16 @@ class emptyScreen extends StatelessWidget {
         children: [
           Image.asset(
             "assets/images/checklist_photo.png",
-            width: 227,
-            height: 227,
+            width: 227.w,
+            height: 227.h,
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 10.h),
           MainText(text: AppLocalizations.of(context)!.emptyStateTitle),
-          SizedBox(height: 10),
+          SizedBox(height: 10.h),
           MainText(
             text: AppLocalizations.of(context)!.emptyStateDesc,
-            fontSize: 16,
-            color: Colors.white.withValues(alpha: 0.87),
+            fontSize: 16.sp,
+            color: Colors.white.withOpacity(0.87),
           ),
         ],
       ),
@@ -108,15 +104,15 @@ class TaskPriorityView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColor.secondaryColor, width: 1.5),
-        borderRadius: BorderRadius.circular(5),
+        border: Border.all(color: AppColor.secondaryColor, width: 1.5.w),
+        borderRadius: BorderRadius.circular(5.r),
       ),
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5.w),
       child: Row(
         children: [
-          Icon(Icons.flag_outlined, color: Colors.white),
-          SizedBox(width: 5),
-          MainText(text: task.priority.toString(), fontSize: 13),
+          Icon(Icons.flag_outlined, color: Colors.white, size: 16.sp),
+          SizedBox(width: 5.w),
+          MainText(text: task.priority.toString(), fontSize: 13.sp),
         ],
       ),
     );
@@ -133,17 +129,18 @@ class TaskCategoryView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: CategoryConfig.getContainerColor(task.category),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(5.r),
       ),
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5.w),
       child: Row(
         children: [
           Icon(
             CategoryConfig.getIcon(task.category),
             color: CategoryConfig.getIconColor(task.category),
+            size: 16.sp,
           ),
-          SizedBox(width: 5),
-          MainText(text: task.category, fontSize: 14),
+          SizedBox(width: 5.w),
+          MainText(text: task.category, fontSize: 14.sp),
         ],
       ),
     );
@@ -161,13 +158,13 @@ class navItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: Colors.white, size: 30),
-        const SizedBox(height: 4),
+        Icon(icon, color: Colors.white, size: 30.sp),
+        SizedBox(height: 4.h),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),

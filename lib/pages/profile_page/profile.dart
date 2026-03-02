@@ -1,10 +1,13 @@
 // pages/profile_page/profile.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/pages/auth/auth_provider.dart';
 import 'package:todo/widgets/common_widgets.dart';
 import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/pages/add_task_page/addTaskPage.dart';
 import 'package:todo/pages/home_page/home_page_widgets.dart';
-import 'package:todo/pages/login_page.dart';
+import 'package:todo/login/login_page.dart';
 import 'package:todo/pages/profile_page/language_page.dart';
 import 'package:todo/pages/profile_page/profile_page_widgets.dart';
 import 'package:todo/theme/app_color.dart';
@@ -19,10 +22,11 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
+    final auth = context.watch<AuthProvider>();
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false, toolbarHeight: 20),
+      appBar: AppBar(automaticallyImplyLeading: false, toolbarHeight: 20.h),
       bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height * 0.1,
+        height: 0.1.sh,
         color: AppColor.cardColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,8 +52,8 @@ class _ProfileState extends State<Profile> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SizedBox(
-        width: 64,
-        height: 64,
+        width: 64.w,
+        height: 64.h,
         child: FloatingActionButton(
           onPressed: () async {
             await showModalBottomSheet(
@@ -61,34 +65,35 @@ class _ProfileState extends State<Profile> {
           },
           backgroundColor: AppColor.secondaryColor,
           shape: CircleBorder(),
-          child: Icon(Icons.add, color: Colors.white, size: 28),
+          child: Icon(Icons.add, color: Colors.white, size: 28.sp),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             children: [
               Center(
                 child: MainText(text: AppLocalizations.of(context)!.profile),
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Container(
-                width: 85,
-                height: 85,
+                width: 85.w,
+                height: 85.h,
                 child: CircleAvatar(backgroundColor: AppColor.homeBg),
               ),
-              SizedBox(height: 10),
-              MainText(text: "Martha Hays"),
-              SizedBox(height: 20),
+              SizedBox(height: 10.h),
+              MainText(text: auth.username),
+              SizedBox(height: 20.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TaskFilterButton(isDoneOrLeft: true),
+
                   TaskFilterButton(isDoneOrLeft: false),
                 ],
               ),
-              SizedBox(height: 32),
+              SizedBox(height: 32.h),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -108,14 +113,12 @@ class _ProfileState extends State<Profile> {
                       );
                     },
                   ),
-                  SizedBox(height: 8),
-
+                  SizedBox(height: 8.h),
                   MainText(
                     text: AppLocalizations.of(context)!.accountSection,
                     color: AppColor.profileTextTitleColor,
                   ),
-                  SizedBox(height: 8),
-
+                  SizedBox(height: 8.h),
                   profileItem(
                     icon: Icons.person_outline_outlined,
                     label: AppLocalizations.of(context)!.changeAccountName,
@@ -129,7 +132,7 @@ class _ProfileState extends State<Profile> {
                     label: AppLocalizations.of(context)!.changeAccountImage,
                   ),
                   MainText(text: "DoMe", color: AppColor.profileTextTitleColor),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   profileItem(
                     icon: Icons.grid_view_outlined,
                     label: AppLocalizations.of(context)!.aboutUs,
@@ -146,9 +149,10 @@ class _ProfileState extends State<Profile> {
                     icon: Icons.thumb_up_alt_outlined,
                     label: AppLocalizations.of(context)!.supportUs,
                   ),
-                  SizedBox(height: 17),
+                  SizedBox(height: 17.h),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      await context.read<AuthProvider>().logout();
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
@@ -164,7 +168,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                 ],
               ),
             ],

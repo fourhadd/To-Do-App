@@ -21,8 +21,10 @@
 "loginWithApple": "Apple ilə daxil ol",
 "registerWithGoogle": "Google ilə qeydiyyat",
 "registerWithApple": "Apple ilə qeydiyyat",
-"noAccount": "Hesabınız yoxdur? Qeydiyyatdan keçin",
-"alreadyHaveAccount": "Artıq hesabınız var? Daxil olun",
+"noAccount": "Hesabınız yoxdur? ",
+"alreadyHaveAccount": "Artıq hesabınız var? ",
+
+
 "index": "İndeks",
 "calendar": "Təqvim",
 "focuse": "Diqqət",
@@ -80,5 +82,10 @@
 "importFromGoogleDrive": "Google Drive-dan idxal et",
 "enterOldPassword": "Köhnə şifrəni daxil edin",
 "enterNewPassword": "Yeni şifrəni daxil edin",
-"language": "Dillər"
+"language": "Dillər",
+"errorEmptyFields": "Boş sahə buraxmaq olmaz",
+"errorPasswordMismatch": "Şifrələr eyni deyil",
+"errorPasswordShort": "Şifrə minimum 6 simvol olmalıdır",
+"errorUsernamePasswordEmpty": "Username və password boş ola bilməz",
+"errorInvalidCredentials": "Username və ya şifrə yanlışdır"
 }

@@ -21,8 +21,11 @@
 "loginWithApple": "Войти через Apple",
 "registerWithGoogle": "Зарегистрироваться через Google",
 "registerWithApple": "Зарегистрироваться через Apple",
-"noAccount": "Нет аккаунта? Зарегистрируйтесь",
-"alreadyHaveAccount": "Уже есть аккаунт? Войти",
+"noAccount": "Нет аккаунта? ",
+"alreadyHaveAccount": "Уже есть аккаунт? ",
+
+
+
 "index": "Индекс",
 "calendar": "Календарь",
 "focuse": "Фокус",
@@ -79,6 +82,11 @@
 "importFromGallery": "Импорт из галереи",
 "importFromGoogleDrive": "Импорт из Google Drive",
 "enterOldPassword": "Введите старый пароль",
-"enterNewPassword": "Введите новый пароль"
-,"language": "Языки"
+"enterNewPassword": "Введите новый пароль",
+"language": "Языки",
+"errorEmptyFields": "Поля не могут быть пустыми",
+"errorPasswordMismatch": "Пароли не совпадают",
+"errorPasswordShort": "Пароль должен быть не менее 6 символов",
+"errorUsernamePasswordEmpty": "Имя пользователя и пароль не могут быть пустыми",
+"errorInvalidCredentials": "Неверное имя пользователя или пароль"
 }

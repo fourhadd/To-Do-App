@@ -1,6 +1,7 @@
 // utils/time_picker/time_picker.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/theme/app_color.dart';
 import '../../widgets/common_widgets.dart';
@@ -13,14 +14,14 @@ Future<TimeOfDay?> selecTime(BuildContext context) async {
     builder: (context) {
       return Dialog(
         backgroundColor: AppColor.cardColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(10.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: 200,
+                height: 200.h,
                 child: CupertinoTheme(
                   data: CupertinoThemeData(brightness: Brightness.dark),
                   child: CupertinoTimerPicker(
@@ -38,6 +39,7 @@ Future<TimeOfDay?> selecTime(BuildContext context) async {
                   ),
                 ),
               ),
+              SizedBox(height: 16.h),
               Button(
                 eleBtnTitle: AppLocalizations.of(context)!.save,
                 textBtnTitle: AppLocalizations.of(context)!.cancel,

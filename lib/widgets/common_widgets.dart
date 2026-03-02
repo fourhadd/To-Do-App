@@ -1,45 +1,34 @@
-// common_widgets.dart
+// widgets/common_widgets.dart
 import 'package:flutter/material.dart';
-import 'package:todo/l10n/app_localizations.dart';
-import 'package:todo/pages/home_page/home_page.dart';
-import 'package:todo/pages/login_page.dart';
-import 'package:todo/pages/register_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:todo/theme/app_color.dart';
 
 class MainBtn extends StatelessWidget {
   final String title;
-  final bool isActive;
+
   final VoidCallback? onPressed;
-  const MainBtn({
-    super.key,
-    required this.title,
-    required this.isActive,
-    required this.onPressed,
-  });
+  const MainBtn({super.key, required this.title, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 1,
-      height: 62,
+      width: 1.sw,
+      height: 62.h,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isActive
-              ? AppColor.primaryColor
-              : AppColor.primaryColor.withValues(alpha: 0.5),
+          backgroundColor: AppColor.primaryColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
         ),
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w400,
-            color: isActive
-                ? Colors.white
-                : Colors.white.withValues(alpha: 0.5),
+            color: Colors.white,
           ),
         ),
       ),
@@ -47,29 +36,26 @@ class MainBtn extends StatelessWidget {
   }
 }
 
-class InputField extends StatefulWidget {
+class InputField extends StatelessWidget {
   final String titleText;
   final String hintText;
   final bool isPassword;
-  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController controller;
 
   const InputField({
     super.key,
     required this.titleText,
     required this.hintText,
     this.isPassword = false,
-    this.controller,
+    this.onChanged,
+    required this.controller,
   });
 
   @override
-  State<InputField> createState() => _InputFieldState();
-}
-
-class _InputFieldState extends State<InputField> {
-  @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4),
+      borderRadius: BorderRadius.circular(4.r),
       borderSide: const BorderSide(color: Color(0xff979797), width: 0.8),
     );
 
@@ -77,20 +63,21 @@ class _InputFieldState extends State<InputField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.titleText,
+          titleText,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w400,
             color: Colors.white.withValues(alpha: 0.87),
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         SizedBox(
-          width: double.infinity,
-          height: 50,
+          width: 1.sw,
+          height: 50.h,
           child: TextField(
-            controller: widget.controller,
-            obscureText: widget.isPassword,
+            controller: controller,
+            onChanged: onChanged,
+            obscureText: isPassword,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               border: border,
@@ -99,168 +86,15 @@ class _InputFieldState extends State<InputField> {
               disabledBorder: border,
               fillColor: const Color(0xff1D1D1D),
               filled: true,
-              hintText: widget.hintText,
+              hintText: hintText,
               hintStyle: TextStyle(
-                fontSize: widget.isPassword ? 20 : 16,
+                fontSize: isPassword ? 20.sp : 16.sp,
                 fontWeight: FontWeight.w400,
                 color: const Color(0xff535353),
               ),
             ),
           ),
         ),
-      ],
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class LogRegFooter extends StatefulWidget {
-  bool isRegister;
-  LogRegFooter({super.key, this.isRegister = false});
-
-  @override
-  State<LogRegFooter> createState() => _LogRegFooterState();
-}
-
-class _LogRegFooterState extends State<LogRegFooter> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(child: Divider(color: Color(0xff979797), thickness: 1)),
-            Text(
-              AppLocalizations.of(context)!.or,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Color(0xff979797),
-              ),
-            ),
-            Expanded(child: Divider(color: Color(0xff979797), thickness: 1)),
-          ],
-        ),
-        SizedBox(height: 24),
-        GestureDetector(
-          onTap: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-              (route) => false,
-            );
-          },
-          child: Container(
-            height: 48,
-            width: MediaQuery.of(context).size.width * 1,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: AppColor.primaryColor, width: 1),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/google_icon.png",
-                  width: 24,
-                  height: 24,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  widget.isRegister
-                      ? AppLocalizations.of(context)!.registerWithGoogle
-                      : AppLocalizations.of(context)!.loginWithGoogle,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white.withValues(alpha: 0.87),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
-        Container(
-          height: 48,
-          width: MediaQuery.of(context).size.width * 1,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: AppColor.primaryColor, width: 1),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Color(0xff283544),
-                ),
-                child: Icon(Icons.apple, color: Colors.white, size: 20),
-              ),
-              SizedBox(width: 10),
-              Text(
-                widget.isRegister
-                    ? AppLocalizations.of(context)!.registerWithApple
-                    : AppLocalizations.of(context)!.loginWithApple,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white.withValues(alpha: 0.87),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 46),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (widget.isRegister) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    (route) => false,
-                  );
-                } else {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => Register()),
-                    (route) => false,
-                  );
-                }
-              },
-              child: RichText(
-                text: TextSpan(
-                  text: widget.isRegister
-                      ? AppLocalizations.of(context)!.alreadyHaveAccount + " "
-                      : AppLocalizations.of(context)!.alreadyHaveAccount + " ",
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.87),
-                    fontSize: 12,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: widget.isRegister
-                          ? AppLocalizations.of(context)!.login
-                          : AppLocalizations.of(context)!.register,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 20),
       ],
     );
   }
@@ -290,7 +124,7 @@ class Button extends StatelessWidget {
           child: Text(
             textBtnTitle.toUpperCase(),
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w400,
               color: Colors.white.withValues(alpha: 0.44),
             ),
@@ -300,15 +134,15 @@ class Button extends StatelessWidget {
           onPressed: nextPress,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColor.primaryColor,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(4.r),
             ),
           ),
           child: Text(
             eleBtnTitle.toUpperCase(),
-            style: const TextStyle(
-              fontSize: 16,
+            style: TextStyle(
+              fontSize: 16.sp,
               fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
@@ -339,27 +173,8 @@ class MainText extends StatelessWidget {
       text,
       style: TextStyle(
         color: color,
-        fontSize: fontSize,
+        fontSize: fontSize.sp,
         fontWeight: fontWeight,
-      ),
-    );
-  }
-}
-
-class PageIndicator extends StatelessWidget {
-  final bool isActive;
-  const PageIndicator({super.key, this.isActive = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 26.28,
-      height: 4,
-      decoration: BoxDecoration(
-        color: isActive
-            ? Colors.white.withValues(alpha: 0.87)
-            : Color(0xffAFAFAF),
-        borderRadius: BorderRadius.circular(56),
       ),
     );
   }

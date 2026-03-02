@@ -1,5 +1,6 @@
 // pages/task_info_page/task_info_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/widgets/common_widgets.dart';
 import 'package:todo/l10n/app_localizations.dart';
 import 'package:todo/models/model_todo.dart';
@@ -24,6 +25,7 @@ class TaskInfo extends StatefulWidget {
 
 class _TaskInfoState extends State<TaskInfo> {
   late TodoItem task;
+
   @override
   void initState() {
     task = widget.task;
@@ -35,7 +37,7 @@ class _TaskInfoState extends State<TaskInfo> {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.black, toolbarHeight: 1),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 11.0),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 11.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,38 +45,34 @@ class _TaskInfoState extends State<TaskInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: () => Navigator.pop(context),
                   icon: Container(
-                    width: 32,
-                    height: 32,
+                    width: 32.w,
+                    height: 32.h,
                     decoration: BoxDecoration(
                       color: Color(0xff1D1D1D),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Icon(Icons.close, color: Colors.white),
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: () => Navigator.pop(context),
                   icon: Container(
-                    width: 32,
-                    height: 32,
+                    width: 32.w,
+                    height: 32.h,
                     decoration: BoxDecoration(
                       color: Color(0xff1D1D1D),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Icon(Icons.repeat, color: Colors.white),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 13),
+            SizedBox(height: 13.h),
             taskTitle(task: task),
-            SizedBox(height: 38),
+            SizedBox(height: 38.h),
             taskInfo(
               leadingIcon: Icons.timer_outlined,
               titleText: AppLocalizations.of(context)!.taskTimeLabel,
@@ -99,15 +97,12 @@ class _TaskInfoState extends State<TaskInfo> {
               titleText: AppLocalizations.of(context)!.taskTimeLabel,
               trailingText: AppLocalizations.of(context)!.addSubTask,
             ),
-
             TextButton.icon(
-              onPressed: () async {
-                Navigator.pop(context, true);
-              },
-              icon: Icon(Icons.delete_outline, color: Colors.red, size: 35),
+              onPressed: () => Navigator.pop(context, true),
+              icon: Icon(Icons.delete_outline, color: Colors.red, size: 35.sp),
               label: MainText(
                 text: AppLocalizations.of(context)!.deleteTask,
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: Colors.red,
               ),
             ),

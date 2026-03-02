@@ -75,10 +75,10 @@ class AppLocalizationsAz extends AppLocalizations {
   String get registerWithApple => 'Apple ilə qeydiyyat';
 
   @override
-  String get noAccount => 'Hesabınız yoxdur? Qeydiyyatdan keçin';
+  String get noAccount => 'Hesabınız yoxdur? ';
 
   @override
-  String get alreadyHaveAccount => 'Artıq hesabınız var? Daxil olun';
+  String get alreadyHaveAccount => 'Artıq hesabınız var? ';
 
   @override
   String get index => 'İndeks';
@@ -253,4 +253,19 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get language => 'Dillər';
+
+  @override
+  String get errorEmptyFields => 'Boş sahə buraxmaq olmaz';
+
+  @override
+  String get errorPasswordMismatch => 'Şifrələr eyni deyil';
+
+  @override
+  String get errorPasswordShort => 'Şifrə minimum 6 simvol olmalıdır';
+
+  @override
+  String get errorUsernamePasswordEmpty => 'Username və password boş ola bilməz';
+
+  @override
+  String get errorInvalidCredentials => 'Username və ya şifrə yanlışdır';
 }

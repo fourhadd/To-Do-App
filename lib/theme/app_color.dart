@@ -10,6 +10,8 @@ class AppColor {
   static const Color textColor = Colors.white;
   static const Color warning = Colors.red;
 
+  static const Color inputBorder = Color(0xff979797);
+
   static const Color profileTextTitleColor = Color(0xFFAFAFAF);
 
   static const Color groceryIcon = Color(0xff21A300);

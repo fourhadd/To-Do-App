@@ -75,10 +75,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registerWithApple => 'Register with Apple';
 
   @override
-  String get noAccount => 'Don\'t have an account? Register';
+  String get noAccount => 'Don\'t have an account? ';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account? Login';
+  String get alreadyHaveAccount => 'Already have an account? ';
 
   @override
   String get index => 'Index';
@@ -253,4 +253,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get language => 'Languages';
+
+  @override
+  String get errorEmptyFields => 'Fields cannot be empty';
+
+  @override
+  String get errorPasswordMismatch => 'Passwords do not match';
+
+  @override
+  String get errorPasswordShort => 'Password must be at least 6 characters';
+
+  @override
+  String get errorUsernamePasswordEmpty => 'Username and password cannot be empty';
+
+  @override
+  String get errorInvalidCredentials => 'Username or password is incorrect';
 }

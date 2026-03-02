@@ -1,9 +1,10 @@
 // pages/splash_page.dart
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo/utils/prefs_helper.dart';
 import 'package:todo/widgets/common_widgets.dart';
 import 'package:todo/pages/home_page/home_page.dart';
-import 'login_page.dart';
+import '../login/login_page.dart';
 import 'package:todo/pages/onboarding/onboarding_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,13 +18,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    checkquery();
+    checkQuery();
   }
 
-  void checkquery() async {
-    final prefs = await SharedPreferences.getInstance();
-    bool onboardComplete = prefs.getBool('onboardingComplete') ?? false;
-    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  void checkQuery() async {
+    bool onboardComplete = await PrefsHelper.isOnboardingComplete();
+    bool isLoggedIn = await PrefsHelper.isLoggedIn();
 
     await Future.delayed(const Duration(seconds: 1));
 
@@ -32,17 +32,17 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!onboardComplete) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const OnboardingPage()),
+        MaterialPageRoute(builder: (_) => const OnboardingPage()),
       );
     } else if (!isLoggedIn) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(builder: (_) => LoginPage()),
       );
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (_) => const HomePage()),
       );
     }
   }
@@ -54,8 +54,16 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/uptodo.png", width: 113, height: 113),
-            MainText(text: "UpTodo", fontSize: 40, fontWeight: FontWeight.w700),
+            Image.asset(
+              "assets/images/uptodo.png",
+              width: 113.w,
+              height: 113.h,
+            ),
+            MainText(
+              text: "UpTodo",
+              fontSize: 40.sp,
+              fontWeight: FontWeight.w700,
+            ),
           ],
         ),
       ),

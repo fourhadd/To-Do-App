@@ -1,5 +1,6 @@
 // pages/add_task_page/add_task_widgets.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/models/model_todo.dart';
 import 'package:todo/theme/app_color.dart';
@@ -12,6 +13,7 @@ class TaskOptionButtons extends StatelessWidget {
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   final VoidCallback onClose;
+
   const TaskOptionButtons({
     super.key,
     required this.titleController,
@@ -30,7 +32,11 @@ class TaskOptionButtons extends StatelessWidget {
         return Row(
           children: [
             IconButton(
-              icon: Icon(Icons.timer_outlined, color: Colors.white),
+              icon: Icon(
+                Icons.timer_outlined,
+                color: Colors.white,
+                size: 28.sp,
+              ),
               onPressed: () async {
                 DateTime? pickedDate = await selectDate(context);
                 if (pickedDate != null) {
@@ -40,9 +46,7 @@ class TaskOptionButtons extends StatelessWidget {
                 }
               },
             ),
-
-            SizedBox(width: 20),
-
+            SizedBox(width: 20.w),
             IconButton(
               onPressed: () async {
                 final category = await selectCategory(context);
@@ -52,11 +56,9 @@ class TaskOptionButtons extends StatelessWidget {
                   });
                 }
               },
-              icon: Icon(Icons.sell_outlined, color: Colors.white),
+              icon: Icon(Icons.sell_outlined, color: Colors.white, size: 28.sp),
             ),
-
-            SizedBox(width: 20),
-
+            SizedBox(width: 20.w),
             IconButton(
               onPressed: () async {
                 final priority = await selectPriority(context);
@@ -66,11 +68,9 @@ class TaskOptionButtons extends StatelessWidget {
                   });
                 }
               },
-              icon: Icon(Icons.flag_outlined, color: Colors.white),
+              icon: Icon(Icons.flag_outlined, color: Colors.white, size: 28.sp),
             ),
-
             Spacer(),
-
             IconButton(
               onPressed: () async {
                 if (titleController.text.trim().isEmpty) return;
@@ -94,7 +94,7 @@ class TaskOptionButtons extends StatelessWidget {
               icon: Icon(
                 Icons.send_outlined,
                 color: AppColor.secondaryColor,
-                size: 28,
+                size: 28.sp,
               ),
             ),
           ],

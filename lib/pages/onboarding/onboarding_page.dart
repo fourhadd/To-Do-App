@@ -1,8 +1,9 @@
 // pages/onboarding/onboarding_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/widgets/common_widgets.dart';
 import 'package:todo/l10n/app_localizations.dart';
-import 'package:todo/pages/login_page.dart';
+import 'package:todo/login/login_page.dart';
 import 'package:todo/pages/onboarding/onboarding_widgets.dart';
 import 'package:todo/utils/prefs_helper.dart';
 
@@ -22,114 +23,97 @@ class _OnboardingPageState extends State<OnboardingPage> {
   final int pageCount = 3;
   final PageController _imageController = PageController();
   final PageController _textController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        toolbarHeight: MediaQuery.of(context).size.height * 0.01,
+        toolbarHeight: 10.h,
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              TextButton(
+                onPressed: () async {
+                  await onboardComplete();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false,
+                  );
+                },
+                child: MainText(
+                  text: AppLocalizations.of(context)!.skip,
+                  fontSize: 16.sp,
+                  color: Colors.white.withValues(alpha: 0.44),
+                ),
+              ),
               SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                height: 280.h,
+                child: PageView(
+                  controller: _imageController,
+                  physics: NeverScrollableScrollPhysics(),
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                    _textController.jumpToPage(index);
+                  },
                   children: [
-                    TextButton(
-                      onPressed: () async {
-                        await onboardComplete();
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                          (route) => false,
-                        );
-                      },
-                      child: MainText(
-                        text: AppLocalizations.of(context)!.skip,
-                        fontSize: 16,
-                        color: Colors.white.withValues(alpha: 0.44),
-                      ),
+                    OnboardingImage(
+                      assetPath: "assets/images/firstOnboarding_photo.png",
                     ),
-                    SizedBox(
-                      height: 280,
-                      child: PageView(
-                        controller: _imageController,
-                        physics: NeverScrollableScrollPhysics(),
-                        onPageChanged: (index) {
-                          setState(() {
-                            currentIndex = index;
-                          });
-                          _textController.jumpToPage(index);
-                        },
-                        children: [
-                          OnboardingImage(
-                            assetPath:
-                                "assets/images/firstOnboarding_photo.png",
-                          ),
-                          OnboardingImage(
-                            assetPath:
-                                "assets/images/secondOnboarding_photo.png",
-                          ),
-                          OnboardingImage(
-                            assetPath:
-                                "assets/images/thirdOnboarding_photo.png",
-                          ),
-                        ],
-                      ),
+                    OnboardingImage(
+                      assetPath: "assets/images/secondOnboarding_photo.png",
                     ),
-                    SizedBox(height: 51),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        PageIndicator(isActive: currentIndex == 0),
-                        SizedBox(width: 12),
-                        PageIndicator(isActive: currentIndex == 1),
-                        SizedBox(width: 12),
-                        PageIndicator(isActive: currentIndex == 2),
-                      ],
+                    OnboardingImage(
+                      assetPath: "assets/images/thirdOnboarding_photo.png",
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      child: PageView(
-                        controller: _textController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        onPageChanged: (index) {
-                          setState(() {
-                            currentIndex = index;
-                          });
-                        },
-                        children: [
-                          OnboardingText(
-                            titleText: AppLocalizations.of(
-                              context,
-                            )!.manageTasksTitle,
-                            subText: AppLocalizations.of(
-                              context,
-                            )!.manageTasksDesc,
-                          ),
-                          OnboardingText(
-                            titleText: AppLocalizations.of(
-                              context,
-                            )!.createRoutineTitle,
-                            subText: AppLocalizations.of(
-                              context,
-                            )!.createRoutineDesc,
-                          ),
-                          OnboardingText(
-                            titleText: AppLocalizations.of(
-                              context,
-                            )!.organizeTasksTitle,
-                            subText: AppLocalizations.of(
-                              context,
-                            )!.organizeTasksDesc,
-                          ),
-                        ],
-                      ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 51.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PageIndicator(isActive: currentIndex == 0),
+                  SizedBox(width: 12.w),
+                  PageIndicator(isActive: currentIndex == 1),
+                  SizedBox(width: 12.w),
+                  PageIndicator(isActive: currentIndex == 2),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.25,
+                child: PageView(
+                  controller: _textController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  children: [
+                    OnboardingText(
+                      titleText: AppLocalizations.of(context)!.manageTasksTitle,
+                      subText: AppLocalizations.of(context)!.manageTasksDesc,
+                    ),
+                    OnboardingText(
+                      titleText: AppLocalizations.of(
+                        context,
+                      )!.createRoutineTitle,
+                      subText: AppLocalizations.of(context)!.createRoutineDesc,
+                    ),
+                    OnboardingText(
+                      titleText: AppLocalizations.of(
+                        context,
+                      )!.organizeTasksTitle,
+                      subText: AppLocalizations.of(context)!.organizeTasksDesc,
                     ),
                   ],
                 ),

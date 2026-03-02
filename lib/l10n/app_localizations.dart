@@ -234,13 +234,13 @@ abstract class AppLocalizations {
   /// No description provided for @noAccount.
   ///
   /// In en, this message translates to:
-  /// **'Don\'t have an account? Register'**
+  /// **'Don\'t have an account? '**
   String get noAccount;
 
   /// No description provided for @alreadyHaveAccount.
   ///
   /// In en, this message translates to:
-  /// **'Already have an account? Login'**
+  /// **'Already have an account? '**
   String get alreadyHaveAccount;
 
   /// No description provided for @index.
@@ -590,6 +590,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Languages'**
   String get language;
+
+  /// No description provided for @errorEmptyFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Fields cannot be empty'**
+  String get errorEmptyFields;
+
+  /// No description provided for @errorPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get errorPasswordMismatch;
+
+  /// No description provided for @errorPasswordShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get errorPasswordShort;
+
+  /// No description provided for @errorUsernamePasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Username and password cannot be empty'**
+  String get errorUsernamePasswordEmpty;
+
+  /// No description provided for @errorInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Username or password is incorrect'**
+  String get errorInvalidCredentials;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
